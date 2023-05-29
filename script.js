@@ -68,3 +68,72 @@ header.addEventListener('dblclick', function() {
     head.appendChild(newLink);
   }
 });
+
+
+
+// get view buttons
+let viewButtons = document.querySelectorAll('.btn-success');
+
+// loop thru buttons
+viewButtons.forEach(function(button) {
+  button.addEventListener('mouseenter', function() {
+    // get parent card and reduce its image + hide text
+    let card = button.closest('.card');
+    card.querySelector('.card-img-top').style.transform = 'scale(0.2)';
+    card.querySelector('.card-text').style.display = 'none';
+  });
+
+  // 'toggle' it  by restoring image size + bring back text
+  button.addEventListener('mouseleave', function() {
+    let card = button.closest('.card');
+    card.querySelector('.card-img-top').style.transform = 'scale(1)';
+    card.querySelector('.card-text').style.display = 'block';
+  });
+});
+
+
+
+// get the ==>
+let forwardButton = document.querySelector('.btn-secondary');
+
+forwardButton.addEventListener('click', function() {
+  // get all the cards
+  let cards = document.querySelectorAll('.card');
+
+  // remove last card from list
+  let lastCard = cards[cards.length - 1];
+  lastCard.remove();
+
+  // insert last card in first place
+  let firstCard = cards[0];
+  firstCard.parentNode.insertBefore(lastCard, firstCard);
+});
+
+
+
+// get the <==
+let backButton = document.querySelector('.btn-primary');
+
+backButton.addEventListener('click', function(event) {
+  // disable link
+  event.preventDefault();
+
+  // get all cards
+  let cards = document.querySelectorAll('.card');
+
+  // remove first card from the list
+  let firstCard = cards[0];
+  firstCard.remove();
+
+  // put first card last
+  let lastCard = cards[cards.length - 1];
+  lastCard.parentNode.appendChild(firstCard);
+
+  // scroll the container to the right 
+  let cardContainer = document.querySelector('.row');
+  cardContainer.scrollLeft += firstCard.offsetWidth;
+});
+
+
+
+
